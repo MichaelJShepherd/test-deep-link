@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bigrider Redirect</title>
+  <script>
+    function openBigrider() {
+      const appUrl = "bigrider:bigrider.app.link";
+      const playStoreUrl = "https://play.google.com/store/apps/details?id=com.rider.big";
+      const appStoreUrl = "https://apps.apple.com/us/app/big-rider/id6747201973";
+
+      const start = Date.now();
+      window.location = appUrl; // try to open the app
+
+      setTimeout(() => {
+        if (Date.now() - start < 2000) {
+          if (/android/i.test(navigator.userAgent)) {
+            window.location = playStoreUrl;
+          } else if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            window.location = appStoreUrl;
+          } else {
+            // optional desktop fallback
+            window.location = "https://bigrider.app.link";
+          }
+        }
+      }, 1500);
+    }
+  </script>
+</head>
+<body>
+  <button onclick="openBigrider()">Open Bigrider</button>
+</body>
+</html>
