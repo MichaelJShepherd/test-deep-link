@@ -1,41 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bigrider Redirect</title>
-  <script>
-   function handleDeepLink() {
-  const appStoreLink = "https://apps.apple.com/us/app/big-rider/id6747201973";
-  const playStoreLink = "https://play.google.com/store/apps/details?id=com.rider.big";
-  const customScheme = "bigrider://";
-
-  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-  let redirectLink = null;
-  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-    redirectLink = appStoreLink;
-  } else if (/android/i.test(userAgent)) {
-    redirectLink = playStoreLink;
-  }
-
-  // Attempt to open the app using the custom scheme
-  window.location.href = customScheme;
-
-  // Set a fallback timer
-  const timer = setTimeout(function() {
-    if (redirectLink) {
-      window.location.href = redirectLink;
-    }
-  }, 1000); // Wait for 1 second
-
-  // A more reliable way to handle successful opening in some browsers
-  // This event fires if the page is being unloaded, indicating the app has opened.
-  window.addEventListener('blur', function() {
-    clearTimeout(timer);
-  });
-}
-  </script>
+  <title>Deep Link Example</title>
 </head>
 <body>
-  <button onclick="handleDeepLink()">Open Bigrider</button>
+  <h1>Welcome to Big Rider</h1>
+  <p>You should be redirected to the app or app store shortly.</p>
+
+  <script>
+    function handleDeepLink() {
+      const appStoreLink = "https://apps.apple.com/us/app/big-rider/id6747201973";
+      const playStoreLink = "https://play.google.com/store/apps/details?id=com.rider.big";
+      const customScheme = "bigrider://";
+
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+      let redirectLink = null;
+      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        redirectLink = appStoreLink;
+      } else if (/android/i.test(userAgent)) {
+        redirectLink = playStoreLink;
+      }
+
+      window.location.href = customScheme;
+
+      const timer = setTimeout(function() {
+        if (redirectLink) {
+          window.location.href = redirectLink;
+        }
+      }, 1000);
+
+      window.addEventListener('blur', function() {
+        clearTimeout(timer);
+      });
+    }
+
+    // Call the function directly
+    handleDeepLink();
+  </script>
 </body>
 </html>
